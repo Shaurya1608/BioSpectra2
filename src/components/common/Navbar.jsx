@@ -38,8 +38,8 @@ const Navbar = () => {
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className={`mx-auto flex items-center justify-between transition-all duration-500 ease-in-out bg-white/95 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] px-6 md:pl-10 md:pr-8 py-3.5 max-w-[1600px] w-full rounded-full border border-slate-200/50 ${
-            scrolled ? 'scale-[0.98] py-2.5 opacity-98' : 'scale-100 py-3.5 opacity-100'
+          className={`mx-auto flex items-center justify-between transition-all duration-700 ease-in-out bg-white/70 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.12)] px-6 md:pl-10 md:pr-8 py-3.5 max-w-[1600px] w-full rounded-full border border-white/20 ${
+            scrolled ? 'scale-[0.98] py-2.5 bg-white/80 shadow-lg' : 'scale-100 py-3.5'
           }`}
         >
           <Link href="/" className="flex items-center space-x-3 group outline-none ring-0 shrink-0 pr-4">
