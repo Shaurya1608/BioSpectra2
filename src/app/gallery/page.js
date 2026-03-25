@@ -67,7 +67,7 @@ const Gallery = () => {
               className="group relative h-56 rounded-xl overflow-hidden cursor-pointer shadow-sm hover:shadow-xl transition-shadow bg-slate-200"
             >
               <Image
-                src={item.image.startsWith('/') ? item.image : `/assets/${item.image.split('/').pop()}`}
+                src={item.image}
                 alt={item.caption}
                 fill
                 className="object-cover group-hover:scale-110 transition-transform duration-500"
@@ -112,7 +112,7 @@ const Gallery = () => {
               onClick={(e) => e.stopPropagation()}
             >
               <Image
-                src={selectedImg.image.startsWith('/') ? selectedImg.image : `/assets/${selectedImg.image.split('/').pop()}`}
+                src={selectedImg.image}
                 alt={selectedImg.caption}
                 width={800}
                 height={600}
