@@ -51,17 +51,16 @@ const ArticleCard = ({ article }) => {
         </div>
       </div>
 
-      <h3 
-        style={{ 
-          fontFamily: 'var(--font-crimson-pro), serif', 
-          fontSize: 22, 
-          fontWeight: 800, 
-          color: '#0d1a0d', 
-          lineHeight: 1.25, 
+      <h3
+        style={{
+          fontSize: 22,
+          fontWeight: 800,
+          color: '#0d1a0d',
+          lineHeight: 1.25,
           letterSpacing: '0.01em',
           marginBottom: 16
         }}
-        className="line-clamp-2 group-hover:text-[#1a7a3a] transition-colors duration-300"
+        className="font-serif line-clamp-2 group-hover:text-[#1a7a3a] transition-colors duration-300"
       >
         {article.title}
       </h3>

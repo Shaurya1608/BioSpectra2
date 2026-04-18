@@ -1,34 +1,110 @@
 @import "tailwindcss";
 
-:root {
-  --text: #334155; /* slate-700 */
-  --text-h: #0f172a; /* slate-900 */
-  --bg: #fcfdfd; /* extremely light pearl */
-  --border: #e2e8f0; /* slate-200 */
-  --accent: #10b981; /* emerald-500 */
-  --accent-dark: #022c22; /* deep forest green */
-  --accent-soft: rgba(16, 185, 129, 0.05);
+/* ============================================================
+   BIOSPECTRA GLOBAL DESIGN SYSTEM — Typography @theme
+   ============================================================
+   font-sans  → Inter        (UI, body, labels, captions)
+   font-serif → Crimson Pro  (Display, headings, article titles)
+   Use Tailwind utility classes `font-sans` / `font-serif` 
+   everywhere instead of inline fontFamily declarations.
+   ============================================================ */
 
-  font-family: var(--font-inter), sans-serif;
-  color: var(--text);
-  background: var(--bg);
+@theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-crimson-pro), 'Georgia', ui-serif, serif;
+  --font-mono: ui-monospace, 'SFMono-Regular', 'Menlo', monospace;
 }
 
+:root {
+  /* ── Semantic Color Tokens ── */
+  --color-text:         #334155;  /* body text   — slate-700  */
+  --color-text-h:       #0d1a0d;  /* heading ink — deep forest */
+  --color-text-muted:   #6b7280;  /* captions, meta — gray-500 */
+  --color-bg:           #f7f5ef;  /* warm parchment background */
+  --color-bg-card:      #ffffff;  /* card / panel surfaces */
+  --color-border:       rgba(26,46,26,0.08); /* subtle green-tinted dividers */
+  --color-accent:       #1a2e1a;  /* primary forest green */
+  --color-accent-mid:   #1a4a1a;  /* medium forest green */
+  --color-accent-light: #1a7a3a;  /* vibrant emerald green */
+
+  font-family: var(--font-sans);
+  color: var(--color-text);
+  background: var(--color-bg);
+}
+
+/* ── Base Resets ── */
 body {
   margin: 0;
   padding: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-family: var(--font-sans);
+}
+
+/* ── Heading Defaults — Crimson Pro for all h-tags ── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  color: var(--color-text-h);
+  margin: 0;
+  line-height: 1.2;
+}
+
+h1 { font-size: clamp(36px, 5vw, 64px); font-weight: 900; letter-spacing: -0.02em; }
+h2 { font-size: clamp(24px, 3.5vw, 42px); font-weight: 800; }
+h3 { font-size: clamp(20px, 2.5vw, 30px); font-weight: 800; }
+h4 { font-size: clamp(16px, 2vw, 22px); font-weight: 700; }
+h5 { font-size: clamp(14px, 1.5vw, 18px); font-weight: 700; }
+h6 { font-size: clamp(12px, 1.2vw, 14px); font-weight: 700; }
+
+/* ── Body Text ── */
+p {
+  line-height: 1.75;
+  color: var(--color-text);
+}
+
+/* ── Links ── */
+a {
+  transition: color 0.2s ease;
+  text-decoration: none;
+}
+
+/* ── Code ── */
+code, pre {
+  font-family: var(--font-mono);
+}
+
+/* ── Typography Utility Classes ── */
+.type-label {
+  font-family: var(--font-sans);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.type-caption {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+}
+
+.type-body {
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  line-height: 1.8;
+  color: var(--color-text);
+}
+
+.type-display {
+  font-family: var(--font-serif);
+  font-weight: 900;
+  letter-spacing: -0.02em;
 }
 
 :focus {
   outline: none !important;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-crimson-pro), serif;
-  color: var(--text-h);
-  margin: 0;
 }
 
 /* Base styles for interactivity */

@@ -61,44 +61,43 @@ const Navbar = () => {
           }}
         >
 
-          {/* ── BRAND BLOCK (unchanged look) ── */}
-          <Link href="/" className="flex items-center gap-3 shrink-0 group outline-none">
+          {/* ── BRAND BLOCK ── */}
+          <Link href="/" className="flex items-center gap-2 sm:gap-3 group outline-none min-w-0 mr-2">
             <motion.div
               whileHover={{ scale: 1.06 }}
               transition={{ type: 'spring', stiffness: 300 }}
+              className="shrink-0 w-11 sm:w-14"
             >
               <Image
                 src="/assets/mset-logo-png-removebg-preview.png"
                 alt="MSET Logo"
                 width={56}
                 height={56}
-                className="object-contain"
+                className="object-contain w-full h-auto"
                 priority
               />
             </motion.div>
 
-            <div className="flex flex-col">
+            <div className="flex flex-col min-w-0">
               <span
+                className="font-serif group-hover:text-emerald-700 transition-colors"
                 style={{
-                  fontFamily: 'var(--font-crimson-pro), serif',
                   fontWeight: 900,
-                  fontSize: 'clamp(13px,1.4vw,18px)',
-                  lineHeight: 1.1,
+                  fontSize: 'clamp(11px, 2.5vw, 18px)',
+                  lineHeight: 1.15,
                   letterSpacing: '0.02em',
                   textTransform: 'uppercase',
                   color: '#0d1a0d',
-                  whiteSpace: 'nowrap',
                   transition: 'color 0.2s ease',
                 }}
-                className="group-hover:text-emerald-700 transition-colors"
               >
                 Madhawi Shyam Educational Trust
               </span>
               <span
                 style={{
-                  fontSize: 8.5,
+                  fontSize: 'clamp(7px, 1.8vw, 8.5px)',
                   fontWeight: 700,
-                  letterSpacing: '0.14em',
+                  letterSpacing: '0.12em',
                   textTransform: 'uppercase',
                   color: '#6b7280',
                   lineHeight: 1.4,
@@ -108,6 +107,7 @@ const Navbar = () => {
                 & International Consortium of Contemporary Biologists (ICCB)
               </span>
               <span
+                className="hidden sm:block"
                 style={{
                   fontSize: 8,
                   fontWeight: 700,
@@ -211,16 +211,13 @@ const Navbar = () => {
           {/* ── MOBILE HAMBURGER ── */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="lg:hidden"
+            className="flex items-center justify-center lg:hidden"
             style={{
               background: 'none',
               border: '1.5px solid rgba(26,46,26,0.25)',
               padding: '7px',
               cursor: 'pointer',
               color: '#1a2e1a',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
             }}
             aria-label="Toggle menu"
           >
