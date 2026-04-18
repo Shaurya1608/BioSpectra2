@@ -179,7 +179,7 @@ const Navbar = () => {
 
             {/* Submit CTA */}
             <Link href="/submit">
-              <button
+              <div
                 style={{
                   background: pathname === '/submit' ? '#1a2e1a' : 'transparent',
                   color: pathname === '/submit' ? '#fff' : '#1a2e1a',
@@ -204,7 +204,7 @@ const Navbar = () => {
                 }}
               >
                 Submit
-              </button>
+              </div>
             </Link>
           </div>
 

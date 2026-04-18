@@ -70,12 +70,12 @@ const Home = () => {
 
         {/* ── TWO-COLUMN GRID ── */}
         <div
-          className="relative z-10 min-h-[100svh] pt-[90px] lg:pt-[110px] pb-8 sm:pb-10 lg:pb-12 px-4 sm:px-6 lg:px-8 flex flex-col lg:grid lg:grid-cols-[1fr_1.15fr] gap-4 lg:gap-6"
+          className="relative z-10 min-h-[100svh] pt-[110px] pb-12 px-3 sm:px-6 lg:px-8 flex flex-col items-center justify-center lg:grid lg:grid-cols-[1fr_1.15fr] gap-6"
         >
           {/* ────────────── LEFT COLUMN ────────────── */}
           <div
-            className="flex flex-col justify-center relative bg-white rounded-[2rem]"
-            style={{ padding: 'clamp(40px,8vw,100px) clamp(20px,4vw,60px) 40px clamp(24px,6vw,90px)', boxShadow: '0 10px 40px -10px rgba(0,0,0,0.04)' }}
+            className="flex flex-col justify-center relative bg-white rounded-[2rem] w-full max-w-[640px] lg:max-w-none"
+            style={{ padding: 'clamp(40px,8vw,100px) clamp(16px,5vw,60px) 40px clamp(20px,6vw,90px)', boxShadow: '0 10px 40px -10px rgba(0,0,0,0.04)' }}
           >
 
             {/* Vertical watermark */}
@@ -176,21 +176,21 @@ const Home = () => {
               className="flex gap-3 flex-wrap ml-7"
             >
               <Link href="/archive">
-                <button
+                <div
                   id="hero-cta-explore"
-                  className="group flex items-center gap-1.5 bg-[#1a2e1a] hover:bg-[#2d5a2d] text-white px-5 py-2 rounded-full shadow-[0_3px_10px_rgba(26,46,26,0.15)] hover:shadow-[0_5px_16px_rgba(26,46,26,0.25)] transition-all duration-300 hover:-translate-y-0.5 font-bold uppercase tracking-[0.16em] text-[9px]"
+                  className="group flex items-center gap-1.5 bg-[#1a2e1a] hover:bg-[#2d5a2d] text-white px-5 py-2 rounded-full shadow-[0_3px_10px_rgba(26,46,26,0.15)] hover:shadow-[0_5px_16px_rgba(26,46,26,0.25)] transition-all duration-300 hover:-translate-y-0.5 font-bold uppercase tracking-[0.16em] text-[9px] cursor-pointer"
                 >
                   explore <ArrowRight size={11} className="group-hover:translate-x-1 transition-transform" />
-                </button>
+                </div>
               </Link>
 
               <Link href="/submit">
-                <button
+                <div
                   id="hero-cta-submit"
-                  className="bg-transparent hover:bg-[#1a2e1a] text-[#1a2e1a] hover:text-white border border-[#1a2e1a] px-5 py-2 rounded-full transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_5px_16px_rgba(26,46,26,0.18)] font-semibold uppercase tracking-[0.12em] text-[9px]"
+                  className="bg-transparent hover:bg-[#1a2e1a] text-[#1a2e1a] hover:text-white border border-[#1a2e1a] px-5 py-2 rounded-full transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_5px_16px_rgba(26,46,26,0.18)] font-semibold uppercase tracking-[0.12em] text-[9px] cursor-pointer"
                 >
                   Submit Article
-                </button>
+                </div>
               </Link>
             </motion.div>
 
@@ -221,7 +221,7 @@ const Home = () => {
 
           {/* ────────────── RIGHT COLUMN — 3D Tree ────────────── */}
           <div
-            className="relative flex flex-col items-center justify-center overflow-hidden rounded-[2rem] pb-20 pt-10 lg:py-0 min-h-[450px] lg:min-h-[calc(100vh-10rem)] shadow-[0_10px_40px_-10px_rgba(0,0,0,0.04)]"
+            className="relative hidden lg:flex flex-col items-center justify-center overflow-hidden rounded-[2rem] pb-20 pt-10 lg:py-0 min-h-[450px] lg:min-h-[calc(100vh-10rem)] shadow-[0_10px_40px_-10px_rgba(0,0,0,0.04)]"
           >
             {/* Improved Dynamic Background */}
             <div
@@ -446,7 +446,8 @@ const Home = () => {
             </div>
             
             <Link href="/archive">
-              <button
+              <div
+                className="cursor-pointer"
                 style={{
                   background: 'transparent',
                   color: '#1a2e1a',
@@ -456,7 +457,6 @@ const Home = () => {
                   fontWeight: 700,
                   letterSpacing: '0.16em',
                   textTransform: 'uppercase',
-                  cursor: 'pointer',
                   transition: 'all 0.22s ease',
                   display: 'flex',
                   alignItems: 'center',
@@ -465,16 +465,18 @@ const Home = () => {
                 onMouseEnter={e => {
                   e.currentTarget.style.background = '#1a2e1a';
                   e.currentTarget.style.color = '#fff';
-                  e.currentTarget.querySelector('svg').style.transform = 'translateX(4px)';
+                  const svg = e.currentTarget.querySelector('svg');
+                  if (svg) svg.style.transform = 'translateX(4px)';
                 }}
                 onMouseLeave={e => {
                   e.currentTarget.style.background = 'transparent';
                   e.currentTarget.style.color = '#1a2e1a';
-                  e.currentTarget.querySelector('svg').style.transform = 'translateX(0)';
+                  const svg = e.currentTarget.querySelector('svg');
+                  if (svg) svg.style.transform = 'translateX(0)';
                 }}
               >
                 Full Archive <ArrowRight size={14} style={{ transition: 'transform 0.22s ease' }} />
-              </button>
+              </div>
             </Link>
           </div>
 
@@ -513,7 +515,7 @@ const Home = () => {
               </div>
               <div className="pt-4 md:pt-0">
                 <Link href="/submit">
-                  <button
+                  <div
                     style={{
                       background: '#1a2e1a',
                       color: '#fff',
@@ -530,7 +532,7 @@ const Home = () => {
                     onMouseLeave={e => e.currentTarget.style.background = '#1a2e1a'}
                   >
                     Submit Paper
-                  </button>
+                  </div>
                 </Link>
               </div>
             </div>

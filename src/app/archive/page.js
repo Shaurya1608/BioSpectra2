@@ -48,8 +48,17 @@ const Archive = () => {
   }, [searchQuery, activeVolume]);
 
   return (
-    <div className="pt-32 pb-20 bg-slate-50 min-h-screen">
-      <div className="container mx-auto px-4 md:px-6">
+    <div className="pt-20 pb-20 bg-[#f7f5ef] min-h-screen relative overflow-hidden">
+      {/* Editorial Background Grid */}
+      <div 
+        className="absolute inset-0 pointer-events-none opacity-[0.03]" 
+        style={{ 
+          backgroundImage: `linear-gradient(to right, #1a2e1a 1px, transparent 1px)`,
+          backgroundSize: 'clamp(40px, 10vw, 80px) 100%' 
+        }}
+      />
+
+      <div className="w-full max-w-[1500px] mx-auto px-4 md:px-8 lg:px-12 relative z-10">
         
         {/* Page Header */}
         <div className="mb-12">
@@ -59,55 +68,61 @@ const Archive = () => {
           />
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 max-w-7xl mx-auto">
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-14 w-full">
           
           {/* Left Sidebar: Sticky Year Navigation */}
-          <aside className="lg:w-1/4 shrink-0">
-            <div className="sticky top-28 bg-white rounded-3xl p-5 border border-slate-100 shadow-xl shadow-slate-200/40">
-              <div className="flex items-center justify-between mb-4 text-emerald-900 border-b border-slate-100 pb-3">
+          <aside className="lg:w-[240px] shrink-0">
+            <div className="sticky top-28 bg-white/80 backdrop-blur-md rounded-2xl p-4 border border-[#1a2e1a]/10 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+              <div className="flex items-center justify-between mb-1 text-[#1a2e1a] border-b border-[#1a2e1a]/5 pb-1">
                 <div className="flex items-center space-x-2">
-                  <Library size={18} className="text-emerald-600" />
-                  <h3 className="text-base font-black uppercase tracking-widest">Published Years</h3>
+                  <h3 className="text-[9px] font-black uppercase tracking-[0.1em] font-sans">Archives Index</h3>
                 </div>
               </div>
 
               {/* Year Search Input */}
-              <div className="mb-4 relative">
+              <div className="mb-1.5 relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
                   <Search size={14} />
                 </div>
                 <input 
                   type="text" 
-                  placeholder="Filter year..."
+                  placeholder="Filter by year..."
                   value={yearQuery}
                   onChange={(e) => setYearQuery(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 pl-9 pr-3 text-sm focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition-colors placeholder:text-slate-400"
+                  className="w-full bg-[#f7f5ef]/50 border border-[#1a2e1a]/10 rounded-xl py-2 pl-9 pr-3 text-[13px] focus:outline-none focus:border-[#1a2e1a] focus:ring-0 transition-all placeholder:text-slate-400 font-medium"
                 />
               </div>
               
               {/* Scrollable Years List */}
               <div 
-                className="flex flex-row lg:flex-col gap-2 overflow-x-auto lg:overflow-y-auto lg:max-h-[49vh] pb-4 lg:pb-0 pr-1 scrollbar-emerald"
+                className="flex flex-row lg:flex-col gap-0 overflow-x-auto lg:overflow-y-auto lg:max-h-[300px] pb-2 lg:pb-0 pr-1 custom-scrollbar"
                 data-lenis-prevent
               >
                 {filteredYears.length > 0 ? (
-                  filteredYears.map((year) => (
-                    <button
-                      key={year}
-                      onClick={() => { setActiveYear(year); setSearchQuery(''); }}
-                      className={`px-4 py-3 rounded-xl text-sm font-bold transition-all whitespace-nowrap text-left flex justify-between items-center group
-                        ${activeYear === year 
-                          ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20 scale-100 lg:scale-[1.02] ml-0 lg:ml-1' 
-                          : 'bg-slate-50 text-slate-600 hover:bg-slate-100 hover:text-emerald-700'
-                        }`}
-                    >
-                      <span>Volume {archives.find(a => a.year === year)?.volume} ({year})</span>
-                      {activeYear === year && <ChevronRight size={16} className="hidden lg:block opacity-70" />}
-                    </button>
-                  ))
+                  filteredYears.map((year) => {
+                    const volObj = archives.find(a => a.year === year);
+                    const isActive = activeYear === year;
+                    return (
+                      <button
+                        key={year}
+                        onClick={() => { setActiveYear(year); setSearchQuery(''); }}
+                        className={`px-3 py-[2px] rounded-lg text-left transition-all whitespace-nowrap flex justify-between items-center group relative overflow-hidden shrink-0
+                          ${isActive 
+                            ? 'bg-[#1a2e1a] text-white shadow-sm' 
+                            : 'bg-transparent text-slate-600 hover:bg-[#1a2e1a]/5 hover:text-[#1a2e1a]'
+                          }`}
+                      >
+                        <div className="flex items-center space-x-2">
+                          <span className={`${isActive ? 'font-bold' : 'font-semibold'} font-serif text-[16px]`}>Vol. {volObj?.volume}</span>
+                          <span className={`text-[12px] ${isActive ? 'text-white/60' : 'text-slate-400'} font-sans font-bold`}>({year})</span>
+                        </div>
+                        {isActive && <ChevronRight size={14} className="opacity-70" />}
+                      </button>
+                    );
+                  })
                 ) : (
-                  <div className="text-center py-4 text-slate-400 text-sm italic">
-                    No years found.
+                  <div className="text-center py-6 text-slate-400 text-xs italic font-serif">
+                    No results found
                   </div>
                 )}
               </div>
@@ -115,100 +130,114 @@ const Archive = () => {
           </aside>
 
           {/* Right Content Area: Search & Issues Grid */}
-          <main className="lg:w-3/4 flex-grow">
+          <main className="lg:w-3/4 flex-grow relative">
             
-            {/* Search Top Bar */}
-            <div className="bg-white rounded-xl p-2.5 border border-slate-100 shadow-sm mb-6 flex items-center">
-              <div className="bg-slate-50 p-2 rounded-lg mr-3 text-emerald-600">
-                <Search size={16} />
-              </div>
-              <input 
-                type="text" 
-                placeholder={`Search within Volume ${activeVolume.volume} (${activeVolume.year})...`}
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-transparent border-none focus:outline-none text-slate-800 text-sm font-medium placeholder:text-slate-400"
-              />
+            {/* Ghost Background Watermark */}
+            <div className="absolute top-40 left-1/2 -translate-x-1/2 pointer-events-none select-none z-0">
+              <span className="text-[18vw] font-black text-[#1a2e1a]/[0.03] font-serif uppercase tracking-tighter leading-none">
+                Vol.{activeVolume.volume}
+              </span>
             </div>
 
-            {/* Active Volume Header */}
-            <div className="flex items-center space-x-3 mb-5">
-              <div className="bg-emerald-50 text-emerald-700 p-2.5 rounded-xl shadow-inner border border-emerald-100">
-                <Book size={20} />
-              </div>
-              <div>
-                <h2 className="text-2xl font-black text-slate-900 tracking-tight">
-                  Volume {activeVolume.volume}
-                </h2>
-                <div className="flex items-center text-emerald-700 font-bold text-[10px] tracking-widest uppercase mt-0.5">
-                  <span>Year: {activeVolume.year}</span>
-                  <span className="mx-2">•</span>
-                  <span>{activeVolume.issues.length} Issues</span>
+            <div className="relative z-10">
+              {/* Header Info */}
+              <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 mt-2">
+                <div>
+                  <div className="flex items-center gap-2 text-[#1a2e1a]/60 font-sans text-[10px] font-bold uppercase tracking-[0.2em] mb-2">
+                    <Book size={12} /> Current Selection
+                  </div>
+                  <h2 className="text-4xl md:text-5xl font-black text-[#0d1a0d] tracking-tight font-serif">
+                    Volume {activeVolume.volume}
+                    <span className="text-[#1a2e1a]/20 ml-4 font-normal text-3xl">/ {activeVolume.year}</span>
+                  </h2>
+                </div>
+
+                {/* Inline Search */}
+                <div className="w-full md:w-80 bg-white/60 backdrop-blur-md rounded-2xl p-1.5 border border-[#1a2e1a]/10 shadow-sm flex items-center group focus-within:border-[#1a2e1a]/30 transition-all">
+                  <div className="p-2 rounded-xl text-[#1a2e1a]/40 group-focus-within:text-[#1a2e1a] transition-colors">
+                    <Search size={18} />
+                  </div>
+                  <input 
+                    type="text" 
+                    placeholder="Search titles or months..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full bg-transparent border-none focus:outline-none text-slate-800 text-[13px] font-medium placeholder:text-slate-400 pb-0.5"
+                  />
                 </div>
               </div>
-            </div>
 
-            {/* Issues Grid with Animation */}
-            <AnimatePresence mode="wait">
-              <motion.div 
-                key={activeYear + searchQuery}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.3 }}
-                className="grid grid-cols-1 md:grid-cols-2 gap-6"
-              >
-                {filteredIssues.length > 0 ? (
-                  filteredIssues.map((issue) => (
-                    <Link 
-                      href={`/issue/${activeVolume.volume}/${issue.number}`}
-                      key={issue.number}
-                      className="bg-white rounded-[1.25rem] border border-slate-100 shadow-sm hover:shadow-lg hover:-translate-y-0.5 hover:border-emerald-200 transition-all duration-300 group cursor-pointer overflow-hidden relative p-4 flex flex-col"
-                    >
-                      <div className="absolute left-0 top-0 bottom-0 w-1 bg-emerald-600 group-hover:w-1.5 transition-all duration-300"></div>
-                      
-                      <div className="flex items-start justify-between mb-3 pl-1">
-                        <div className="bg-emerald-50 text-emerald-700 w-10 h-10 rounded-[0.6rem] flex items-center justify-center border border-emerald-100 group-hover:bg-emerald-600 group-hover:text-white transition-colors duration-300 shrink-0">
-                          <span className="text-lg font-black">{issue.number}</span>
+              {/* Issues Grid with Animation */}
+              <AnimatePresence mode="wait">
+                <motion.div 
+                  key={activeYear + searchQuery}
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -15 }}
+                  transition={{ duration: 0.45, ease: [0.23, 1, 0.32, 1] }}
+                  className="grid grid-cols-1 md:grid-cols-2 gap-4"
+                >
+                  {filteredIssues.length > 0 ? (
+                    filteredIssues.map((issue, idx) => (
+                      <Link 
+                        href={`/issue/${activeVolume.volume}/${issue.number}`}
+                        key={issue.number}
+                        className="group relative bg-white rounded-2xl border border-[#1a2e1a]/5 hover:border-[#1a2e1a]/20 shadow-[0_4px_12px_rgba(0,0,0,0.02)] hover:shadow-[0_20px_40px_rgba(26,46,26,0.08)] transition-all duration-500 cursor-pointer overflow-hidden p-4 flex flex-col min-h-[140px]"
+                      >
+                        {/* Status Label */}
+                        <div className="absolute top-0 right-0">
+                          <div className="bg-[#1a2e1a]/5 px-3 py-1.5 rounded-bl-xl text-[8px] font-black uppercase tracking-[0.15em] text-[#1a2e1a]/60 group-hover:bg-[#1a2e1a] group-hover:text-white transition-colors duration-300">
+                            {issue.month} Release
+                          </div>
                         </div>
-                        <div className="bg-slate-50 px-2 py-1 rounded border border-slate-100 group-hover:border-emerald-200 transition-colors ml-2 mt-1">
-                          <span className="text-[8px] font-black uppercase tracking-widest text-slate-500 whitespace-nowrap">
-                            {issue.month} Issue
-                          </span>
+
+                        <div className="flex items-start gap-5 mb-6">
+                          <div className="bg-[#f7f5ef] text-[#1a2e1a] w-10 h-10 rounded-lg flex items-center justify-center border border-[#1a2e1a]/5 group-hover:bg-[#1a2e1a] group-hover:text-white transition-all duration-500 transform group-hover:rotate-6">
+                            <span className="text-lg font-black font-serif">{issue.number}</span>
+                          </div>
+                          <div className="pt-0.5">
+                            <span className="text-[8px] font-bold text-[#1a2e1a]/40 uppercase tracking-[0.2em] mb-0.5 block">Issue Portfolio</span>
+                            <h4 className="text-[17px] font-bold text-[#0d1a0d] leading-tight font-serif uppercase tracking-tight">
+                              Vol. {activeVolume.volume}, Issue {issue.number}
+                            </h4>
+                          </div>
                         </div>
+
+                        <div className="flex flex-col gap-1.5 mb-5">
+                          <div className="flex items-center text-[11.5px] font-medium text-slate-600">
+                            <div className="w-1.5 h-1.5 rounded-full bg-[#1a2e1a]/20 mr-2 shrink-0" />
+                            {issue.month} {activeVolume.year} Edition
+                          </div>
+                          <div className="flex items-center text-[11.5px] font-medium text-slate-600">
+                            <FileText size={12} className="mr-2 text-[#1a2e1a]/40" />
+                            <span className="text-[#1a2e1a] font-bold mr-1">{issue.articleCount}</span> Peer-Reviewed Papers
+                          </div>
+                        </div>
+
+                        <div className="mt-auto flex items-center justify-between">
+                          <div className="flex items-center gap-2 group/btn">
+                            <span className="text-[9px] font-black uppercase tracking-[0.2em] text-[#1a2e1a]">Open Archive</span>
+                            <div className="w-6 h-[1px] bg-[#1a2e1a]/20 group-hover/btn:w-9 transition-all duration-300" />
+                          </div>
+                          <div className="bg-[#f7f5ef] p-1.5 rounded-lg group-hover:bg-[#1a2e1a] group-hover:text-white transition-all transform group-hover:translate-x-1">
+                            <ChevronRight size={14} />
+                          </div>
+                        </div>
+                      </Link>
+                    ))
+
+                  ) : (
+                    <div className="col-span-full bg-white/40 backdrop-blur-md p-20 text-center rounded-[2.5rem] border border-[#1a2e1a]/5">
+                      <div className="bg-white w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6 text-slate-300 shadow-sm">
+                        <Search size={40} />
                       </div>
-
-                      <div className="mb-4 pl-1">
-                        <h4 className="text-[15px] font-bold text-slate-900 mb-1 group-hover:text-emerald-700 transition-colors leading-snug">
-                          Issue {issue.number} - {issue.month} {activeVolume.year}
-                        </h4>
-                        <div className="flex items-center text-[11px] font-medium text-slate-500">
-                          <FileText size={10} className="mr-1 text-slate-400 group-hover:text-emerald-500 shrink-0" />
-                          {issue.articleCount} Peer-Reviewed Papers
-                        </div>
-                      </div>
-
-                      <div className="mt-auto pt-2 border-t border-slate-100 flex items-center justify-between text-emerald-700 text-[9px] font-black uppercase tracking-widest group-hover:text-emerald-600 pl-1">
-                        <span>Explore Contents</span>
-                        <div className="bg-emerald-50 p-1 rounded group-hover:bg-emerald-100 group-hover:translate-x-0.5 transition-all">
-                          <ChevronRight size={12} />
-                        </div>
-                      </div>
-                    </Link>
-                  ))
-
-                ) : (
-                  <div className="col-span-full bg-white p-12 text-center rounded-3xl border border-slate-100">
-                    <div className="bg-slate-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-400">
-                      <Search size={32} />
+                      <h3 className="text-2xl font-black text-[#1a2e1a] mb-2 font-serif uppercase tracking-tight">No Matching Issues</h3>
+                      <p className="text-slate-500 font-medium italic">We couldn't find any issues matching "{searchQuery}" in this volume.</p>
                     </div>
-                    <h3 className="text-xl font-bold text-slate-900 mb-2">No issues found</h3>
-                    <p className="text-slate-500">We couldn't find any issues matching "{searchQuery}" in Volume {activeVolume.volume}.</p>
-                  </div>
-                )}
-              </motion.div>
-            </AnimatePresence>
-
+                  )}
+                </motion.div>
+              </AnimatePresence>
+            </div>
           </main>
         </div>
       </div>
